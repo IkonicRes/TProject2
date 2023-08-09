@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection.js');
 
-class ProductTag extends Model {}
+class Post extends Model {}
 
-ProductTag.init(
+Post.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -11,19 +11,14 @@ ProductTag.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    product_id: {
+    poster_id: { // Add the poster_id field
       type: DataTypes.INTEGER,
-      references: {
-        model: 'product', // References the Product model
-        key: 'id',
-      },
+      allowNull: false,
     },
-    tag_id: {
+    likes: { // Add the likes field
       type: DataTypes.INTEGER,
-      references: {
-        model: 'tag', // References the Tag model
-        key: 'id',
-      },
+      allowNull: false,
+      defaultValue: 0,
     },
   },
   {
@@ -31,8 +26,8 @@ ProductTag.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'product_tag',
+    modelName: 'post',
   }
 );
 
-module.exports = ProductTag;
+module.exports = Post;

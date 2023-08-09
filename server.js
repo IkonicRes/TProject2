@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Import the routes module from the './routes' file
-const routes = require('./parts/routes');
+const routes = require('./routes');
 
 // Import the sequelize connection from the './config/connection' file
 const sequelize = require('./config/connection');
