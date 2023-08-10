@@ -20,6 +20,12 @@ Post.init(
       allowNull: false,
       defaultValue: 0,
     },
+    text_content: { //Add the text_content field
+      type: DataTypes.TEXT,
+    },
+    media_url: { //Add the media_url field
+      type: DataTypes.STRING(255),
+    }
   },
   {
     sequelize,

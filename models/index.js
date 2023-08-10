@@ -9,9 +9,9 @@ User.hasMany(Post, { foreignKey: 'id' });
 Post.belongsTo(User, { foreignKey: 'id' });
 
 // Users have many Comments
-//User.hasMany(Comment, { foreignKey: 'user_id' });
+User.hasMany(Comment, { foreignKey: 'id' });
 // Each Comment belongs to a User
-//Comment.belongsTo(User, { foreignKey: 'user_id' });
+Comment.belongsTo(User, { foreignKey: 'id' });
 
 // Each Post can have many Comments
 Post.hasMany(Comment, { foreignKey: 'id' });

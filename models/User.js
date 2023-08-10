@@ -19,6 +19,10 @@ User.init(
       type: DataTypes.STRING(64),
       allowNull: false,
     },
+    profile_pic_url: {
+      type: DataTypes.STRING(255),
+      defaultValue: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
+    }
   },
   {
     sequelize,
