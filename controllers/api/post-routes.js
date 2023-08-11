@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
         include: Comment,
       });
     }
-    res.status(200).json(postData);
+    res.render(200).json(postData);
   } catch (error) {
     res.status(500).json(error);
   }

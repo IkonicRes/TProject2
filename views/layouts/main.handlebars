@@ -18,25 +18,7 @@
             <button type="submit">Post</button>
         </form>
     </section>
-
-    <section class="posts">
-        {{#each posts}}
-        <article class="post">
-            <p>{{this.content}}</p>
-            <button class="like-button">Like</button>
-            <button class="comment-button">Comment</button>
-            <div class="comments">
-                {{#each this.comments}}
-                <div class="comment">
-                    <p>{{this.content}}</p>
-                    <button class="like-button">Like</button>
-                </div>
-                {{/each}}
-            </div>
-        </article>
-        {{/each}}
-    </section>
-
+    {{{body}}}
     <footer>
         <p>&copy; 2023 SpaceBook - Explore the Cosmos</p>
     </footer>
