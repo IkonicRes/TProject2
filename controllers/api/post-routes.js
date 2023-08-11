@@ -5,14 +5,23 @@ const { Post, Comment } = require('../../models');
 // GET all posts
 router.get('/', async (req, res) => {
   try {
-    const postData = await Post.findAll({
-      include: Comment,
-    });
-    res.status(200).json(postData);
+    let postData;
+    if (req.query.sortBy === 'likes') {
+      postData = await Post.findAll({
+        include: Comment,
+        order: [['likes', 'DESC']],
+      });
+    } else {
+      postData = await Post.findAll({
+        include: Comment,
+      });
+    }
+    res.render(200).json(postData);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
 
 // GET one post by its ID
 router.get('/:id', async (req, res) => {
