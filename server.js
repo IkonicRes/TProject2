@@ -22,6 +22,8 @@ const hbars = handlebars.create({})
 // Set the PORT variable to the value of process.env.PORT or 3001
 const PORT = process.env.PORT || 3001;
 
+const path = require('path');
+
 try {
   // Set the view engine to handlebars
 app.engine('handlebars', hbars.engine);
@@ -39,7 +41,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use the routes module for handling routes
 app.use(routes);
-
+console.log("Static routes: ", path.join(__dirname, 'public'))
+app.use(express.static(path.join(__dirname, 'public')));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
 // Sync the sequelize models to the database and start the server
 sequelize.sync().then(() => {
   axios.defaults.baseURL = '127.0.0.1:3001';

@@ -6,10 +6,11 @@ class Post extends Model {}
 Post.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+      unsigned: true,
     },
     poster_id: { // Add the poster_id field
       type: DataTypes.INTEGER,
