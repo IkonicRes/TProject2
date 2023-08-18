@@ -5,26 +5,36 @@
         --textbox-bkgcolor: rgba(32, 0, 88, 0.304);
         /* TEXT COLORS */
         --main-text-color: rgb(0, 116, 204);
+        
         /* --main-text-color: rgb(0, 78, 137); */
         --h1-text-color: rgb(1, 111, 196);
         --h2-text-color: rgb(0, 115, 203);
         /* SHADOW COLORS */
-        --shadowcolor: rgba(37, 208, 255, 0.808);
-        --h2-shadowcolor: rgba(52, 177, 255, 0.591);
+        --shadowcolor: rgb(0, 136, 255);
+        --alt-shadowcolor: rgba(0, 136, 255, 0.739);
+        --alt-b-shadowcolor: rgba(105, 193, 255, 0.685);
     /* TEXT EFFECTS */
-        --base-textshadow: -1px 1px 1px var(--shadowcolor),
-        1px 1px 1px var(--shadowcolor),
-        -1px -1px 1px var(--shadowcolor),
-        1px -1px 1px var(--shadowcolor);
-        --h2-textshadow: -1px 1px 1px var(--h2-shadowcolor),
-        1px 1px 1px var(--h2-shadowcolor),
-        -1px -1px 1px var(--h2-shadowcolor),
-        1px -1px 1px var(--h2-shadowcolor);
+    --base-textshadow: -1px 1px 1px var(--shadowcolor),
+    1px 1px 1px var(--shadowcolor),
+    -1px -1px 1px var(--shadowcolor),
+    1px -1px 1px var(--shadowcolor);
+    --alt-textshadow: -1px 1px 1px var(--alt-shadowcolor),
+    1px 1px 1px var(--alt-shadowcolor),
+    -1px -1px 1px var(--alt-shadowcolor),
+    1px -1px 1px var(--alt-shadowcolor);
+    --alt-b-textshadow: -1px 1px 1px var(--alt-b-shadowcolor),
+    1px 1px 1px var(--alt-b-shadowcolor),
+    -1px -1px 1px var(--alt-b-shadowcolor),
+    1px -1px 1px var(--alt-b-shadowcolor);
     /* SIZES  */
-        --h1-textsize: 4vw;
-        --h2-textsize: 2vw;
+    --base-textsize: 1vw;
+    --h1-textsize: 4vw;
+    --h2-textsize: 2vw;
+    --h3-textsize: 1.5vw;
+    --h4-textsize: 1.25vw;
+    --nav-textsize: 1.5vw;
     /* SPACING */
-        --h1-margintop: 25vh;
+    --h1-margintop: 25vh;
         --textbox-padding: 1vw;
     /* BORDERS */
         --textbox-border-radius: 15px;
