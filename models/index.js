@@ -1,25 +1,36 @@
-// import models
+// Import the required models
+const Topic = require('./Topic');
 const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
+const Like = require('./Like');
 
-// Users have many Posts
-User.hasMany(Post, { foreignKey: 'id' });
-// Each Post belongs to a User
-Post.belongsTo(User, { foreignKey: 'id' });
+// Define the associations between the models
 
-// Users have many Comments
-User.hasMany(Comment, { foreignKey: 'id' });
-// Each Comment belongs to a User
-Comment.belongsTo(User, { foreignKey: 'id' });
+// Each Topic has many Posts
+Topic.hasMany(Post, { foreignKey: 'topic_id' });
+User.hasMany(Post, { foreignKey: 'poster_id' });
+User.hasMany(Comment, { foreignKey: 'user_id' });
+User.hasMany(Like, { foreignKey: 'user_id' });
 
-// Each Post can have many Comments
-Post.hasMany(Comment, { foreignKey: 'id' });
-// Each Comment belongs to a Post
-Comment.belongsTo(User, { foreignKey: 'id' });
+Post.belongsTo(User, { foreignKey: 'poster_id' });
+Post.belongsTo(Topic, { foreignKey: 'topic_id' });
+Post.hasMany(Comment, { foreignKey: 'post_id' });
+Post.hasMany(Like, { foreignKey: 'post_id', as: 'postLikes' });
 
+Comment.belongsTo(User, { foreignKey: 'comment_poster_id' });
+Comment.belongsTo(Post, { foreignKey: 'comment_id' });
+Comment.hasMany(Like, { foreignKey: 'comment_id' });
+
+Like.belongsTo(User, { foreignKey: 'user_id' });
+
+
+
+// Export the models
 module.exports = {
+  Topic,
   User,
   Post,
   Comment,
+  Like
 };

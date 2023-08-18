@@ -1,32 +1,71 @@
+// Import the necessary modules from Sequelize
 const { Model, DataTypes } = require('sequelize');
+
+// Import the Sequelize connection
 const sequelize = require('../config/connection.js');
 
+// Create a Post class that extends the Sequelize Model class
 class Post extends Model {}
 
+// Initialize the Post model with its attributes
 Post.init(
   {
-    id: {
+    // Define the post_id attribute
+    post_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    poster_id: { // Add the poster_id field
-      type: DataTypes.INTEGER,
+    // Define the poster_id attribute
+    poster_id: { 
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      references: {
+        model: 'user',
+        key: 'user_id',
+      },
     },
-    likes: { // Add the likes field
+    // Define the likes attribute
+    likes: { 
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 0,
     },
-    text_content: { //Add the text_content field
-      type: DataTypes.TEXT,
-    },
-    media_url: { //Add the media_url field
+    // Define the title attribute
+    title: { 
       type: DataTypes.STRING(255),
-    }
+      allowNull: false,
+    },
+    // Define the text_content attribute
+    text_content: { 
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        len: [1]
+      }
+    },
+    // Defining the created_at attribute
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    // Define the media_url attribute
+    media_url: { 
+      type: DataTypes.STRING(255),
+    },
+    // Define the topic_id attribute
+    topic_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: {
+        model: 'topic',
+        key: 'topic_id',
+      },
+    },
   },
+  // Define the model options
   {
     sequelize,
     timestamps: false,
@@ -36,4 +75,5 @@ Post.init(
   }
 );
 
+// Export the Post model
 module.exports = Post;

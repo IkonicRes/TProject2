@@ -1,4 +1,5 @@
-const { User } = require('../models'); // Just 'models' is sufficient
+const bcrypt = require('bcrypt');
+const { User } = require('../models');
 
 const userData = [
   {
@@ -11,11 +12,25 @@ const userData = [
     password: 'password2',
     profile_pic_url: 'https://www.gravatar.com/avatar/22222222222222222222222222222222?d=mp&f=y',
   },
+  {
+    username: 'Randy Bobandy',
+    password: 'cheeseburger',
+    profile_pic_url: 'https://www.gravatar.com/avatar/22222222222222222222222222222222?d=mp&f=y',
+  },
 ];
 
-
 const seedUsers = async () => {
-  await User.bulkCreate(userData);
+  const hashedUsers = await Promise.all(
+    userData.map(async (user) => {
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      return {
+        ...user,
+        password: hashedPassword,
+      };
+    })
+  );
+
+  await User.bulkCreate(hashedUsers);
 };
 
 module.exports = seedUsers;
