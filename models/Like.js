@@ -23,11 +23,19 @@ Like.init(
     comment_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
+      // references: {
+      //   model: 'comment',
+      //   key: 'comment_id',
+      // }
     },
     // Defining the user_id attribute
     user_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      // references: {
+      //   model: 'user',
+      //   key: 'user_id',
+      // }
     },
   },
   {

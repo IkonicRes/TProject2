@@ -16,14 +16,14 @@ User.hasMany(Like, { foreignKey: 'user_id' });
 Post.belongsTo(User, { foreignKey: 'poster_id' });
 Post.belongsTo(Topic, { foreignKey: 'topic_id' });
 Post.hasMany(Comment, { foreignKey: 'post_id' });
-Post.hasMany(Like, { foreignKey: 'post_id', as: 'postLikes' });
+Post.hasMany(Like, { foreignKey: 'post_id'});
 
 Comment.belongsTo(User, { foreignKey: 'comment_poster_id' });
-Comment.belongsTo(Post, { foreignKey: 'comment_id' });
+Comment.belongsTo(Post, { foreignKey: 'post_id' });
 Comment.hasMany(Like, { foreignKey: 'comment_id' });
 
 Like.belongsTo(User, { foreignKey: 'user_id' });
-
+Like.belongsTo(Post, { foreignKey: 'post_id' });
 
 
 // Export the models

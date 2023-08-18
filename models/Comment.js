@@ -15,20 +15,19 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    // Defining the created_at attribute
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
     // Defining the comment_poster_id attribute
     comment_poster_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      references: {
+        model: 'user',
+        key: 'user_id',
+      },
     },
     post_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      
     },
     // Defining the likes attribute
     likeys: {
@@ -44,7 +43,7 @@ Comment.init(
   {
     // Configuring the model options
     sequelize,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
     modelName: 'comment',
