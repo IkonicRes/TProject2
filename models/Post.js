@@ -26,12 +26,7 @@ Post.init(
         key: 'user_id',
       },
     },
-    // Define the likes attribute
-    likes: { 
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 0,
-    },
+
     // Define the title attribute
     title: { 
       type: DataTypes.STRING(255),
