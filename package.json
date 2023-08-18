@@ -1,0 +1,32 @@
+{
+  "name": "spacebook",
+  "version": "1.0.0",
+  "description": "A corner for space lovers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "seed": "node seeds/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IkonicRes/SpaceBook.git"
+  },
+  "author": "IkonicRes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IkonicRes/SpaceBook/issues"
+  },
+  "homepage": "https://github.com/IkonicRes/SpaceBook#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "mysql2": "^3.5.2",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.32.1"
+  }
+}
