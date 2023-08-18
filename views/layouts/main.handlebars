@@ -1,33 +1,110 @@
-html
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Set the character encoding and viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Set the title of the page -->
+    <title>SpaceBook</title>
+
+    <!-- Include CSS stylesheets -->
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/root.css">
     <link rel="stylesheet" href="/css/style.css">
-    <title>SpaceBook - Explore the Cosmos</title>
+
+    <!-- Define a JavaScript function to redirect to the '/addPost' route -->
+    <script>
+        function redirectToAddPost() {
+            window.location.href = '/addPost';
+        }
+    </script>
+    <script type = "text/javascript">
+        function reloadPage() {
+            window.location.reload();
+        }
+        function showModal(postId) {
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('modalOverlay').setAttribute('data-post-id', postId);
+  }
+
+  function hideModal() {
+    document.getElementById('modalOverlay').style.display = 'none';
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+    </script>
+    
 </head>
+
 <body>
+    <!-- Output the value of the 'isAuthenticated' variable to the console -->
+    {{!-- {{consoleLog 'IsAuthenticated:' isAuthenticated}} --}}
+
+    <!-- Define the header section of the page -->
     <header>
-        <h1>Welcome to SpaceBook</h1>
-        <p>Connect with fellow outer-space enthusiasts!</p>
+        <!-- Define the title section of the header -->
+        <section id="title">
+            <!-- Display the website name and description -->
+            <h1><a href="/">TekFleks</a></h1>
+            <h2>Your platform to discuss and learn tech</h2>
+        </section>
+
+        <!-- Define the user field section of the header -->
+        <section>
+            <div id="user-field">
+                <!-- Check if the 'user' variable exists -->
+                {{#if user}}
+                <!-- Display the logout button if the user is logged in -->
+                <a href="/logout" class="logout-button">Logout</a>
+                {{else}}
+                    {{#unlessTemplate 'login' body}}
+                    {{#unlessTemplate 'signup' body}}
+                    {{#unlessTemplate 'about' body}}
+                <!-- Display the login button if the user is not logged in -->
+                    <a href="/login" class="logout-button">Login</a>
+                    {{/unlessTemplate}}
+                    {{/unlessTemplate}}
+                    {{/unlessTemplate}}
+                {{/if}}
+
+
+                <!-- Check if the user is authenticated -->
+                {{#if isAuthenticated}}
+                    <!-- Check if the current page body is the 'feed' template -->
+                    {{#isTemplate 'feed' body}}
+                        <!-- Display a welcome message with the username -->
+                        <p>Welcome, {{user}}!</p>
+                        <!-- Output the value of the 'user' variable to the console -->
+                        {{!-- {{consoleLog 'User:' user}} --}}
+                    {{/isTemplate}}
+                {{/if}}
+            </div>
+
+            <!-- Define the navigation menu -->
+            <nav class="navigation">
+                <a href="/">Home</a>
+                <a href="/topics">Topics</a>
+                <a href="/profile">My Profile</a>
+                <a href="/about">About</a>
+            </nav>
+        </section>
     </header>
 
-    <section class="post-form">
-        <h2>Create a New Post</h2>
-        <form action="/create-post" method="POST">
-            <div class="textarea-container">
-                <textarea name="postContent" placeholder="Share your thoughts about the universe..." required></textarea>
-                <button id="post-button" type="submit">Post</button>
-            </div>
-        </form>
-    </section>
-    {{{body}}}
+    <!-- Define the main content section of the page -->
+    <main>
+        <section class="content">
+            <!-- Render the dynamic content of the current page -->
+            {{{body}}}
+        </section>
+    </main>
+
+    <!-- Define the footer section of the page -->
     <footer>
-        <p>&copy; 2023 SpaceBook - Explore the Cosmos</p>
+        <!-- Display the copyright information -->
+        <p>&copy; 2023 SpaceBook</p>
     </footer>
 </body>
+
 </html>

@@ -1,17 +1,40 @@
-<section class="posts">
-    {{#each posts as |this|}}
-    <article class="post">
-        <p>{{this.content}}</p>
-        <button class="like-button">Like</button>
-        <button class="comment-button">Comment</button>
-        <div class="comments">
-            {{#each this.comments}}
-            <div class="comment">
-                <p>{{this.content}}</p>
-                <button class="like-button">Like</button>
-            </div>
-            {{/each}}
-        </div>
-    </article>
-    {{/each}}
-</section>
+<article class="sections feed">
+{{#if user}}
+  <!-- Display feed content for authenticated users -->
+    <section id="feed">
+      <h2>
+        Feed
+      </h2>
+      <button type="button" onclick="redirectToAddPost()" id="post-button">Create Post</button>
+    </section>
+{{/if}}
+    <!-- Loop over each post in the 'posts' array -->
+{{#each posts as |post|}}
+  <article class="post subsections">
+    <h3>{{post.topic.name}}</h3>
+    <section class="posts">
+      <a class="post-link" href="/posts/{{post.post_id}}">
+        <!-- Display the post title -->
+        <h4><q>{{post.title}}</q></h4>
+      </a>
+      <!-- Display the post content -->
+      <p>{{post.text_content}}</p>
+      <p>By: {{formatDate post.user.username}}</p>
+      <p>Written on: {{formatDate post.created_at}}</p>
+    </section>
+  </article>
+{{/each}}
+
+  </article>
+{{!-- {{else}}
+  <!-- Display message for unauthenticated users -->
+  <section class="sections reject">
+    <div class="rejection-text">
+      <p>Please log in or sign up to access this content.</p>
+      <br>
+      <a href="/signup">Signup</a></p>
+    </div>
+    <br>
+    <p>Already have an account? <a href="/login">Login</a></p>
+  </section>
+ --}}
