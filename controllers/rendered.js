@@ -140,8 +140,12 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         newestPost = await Post.create({
           user_id: user_id,
           title: title,
-          topic_id: selectedTopic.topic_id, // Set the correct topic_id here
+          mediaSource: {
+            name: req.body.media_name,
+            url: req.body.media_url,
+          },
           text_content: post,
+          topic_id: selectedTopic.topic_id, // Set the correct topic_id here
           // Other fields as needed
         });
   // console.log('WHYYYYYYYYY')

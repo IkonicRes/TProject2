@@ -47,7 +47,10 @@ router.post('/', async (req, res) => {
     const postData = await Post.create({
       title: req.body.title,
       text_content: req.body.text_content,
-      media_url: req.body.media_url,
+      mediaSource: {
+        name: req.body.media_name,
+        url: req.body.media_url,
+      },
       topic_id: req.body.topic_id,
       poster_id: userId, // Assuming your Post model's field name is "poster_id"
     });

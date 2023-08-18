@@ -33,6 +33,9 @@ Post.init(
       allowNull: false,
     },
     // Define the text_content attribute
+    mediaSource: { 
+      type: DataTypes.JSON,
+    },
     text_content: { 
       type: DataTypes.TEXT,
       allowNull: false,
@@ -47,9 +50,6 @@ Post.init(
       defaultValue: DataTypes.NOW,
     },
     // Define the media_url attribute
-    media_url: { 
-      type: DataTypes.STRING(255),
-    },
     // Define the topic_id attribute
     topic_id: {
       type: DataTypes.INTEGER.UNSIGNED,

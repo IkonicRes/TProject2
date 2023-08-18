@@ -5,6 +5,9 @@
     <article class="single-post">
         <!-- Display the post title -->
         <h2><q>{{post.title}}</q></h2>
+        <div id="image-container">
+        <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.name}}">
+        </div>
         <!-- Display the post content -->
         <p>{{post.text_content}}</p>
         <!-- Log the current user to the console with a custom message -->

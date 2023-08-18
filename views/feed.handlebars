@@ -3,25 +3,43 @@
   <!-- Display feed content for authenticated users -->
     <section id="feed">
       <h2>
-        Feed
+Care to share your thoughts?
       </h2>
-      <button type="button" onclick="redirectToAddPost()" id="post-button">Create Post</button>
+      <section class="add-post">
+        <textarea id="animatedTextarea" class="hidden"></textarea>
+        <div id="post-buttons">
+          <button id="animatedButton1" class="post-button">Make a new signal</button>
+          <button id="animatedButton2" class="post-button">Post a random NASA photo and what you found about it.</button>
+          <button id="animatedButton3" class="post-button">Post a random NASA photo and what you found about it.</button>
+          <button id="animatedButton4" class="post-button">Submit your signal</button>
+        </div>
+      </section>
     </section>
+<script>
+        // Your JavaScript code for this specific view
+        const animateButton = document.getElementById('animatedButton1');
+        const animatedTextarea = document.getElementById('animatedTextarea');
+
+        animateButton.addEventListener('click', () => {
+            animatedTextarea.classList.toggle('visible');
+        });
+  </script>
 {{/if}}
     <!-- Loop over each post in the 'posts' array -->
 {{#each posts as |post|}}
   <article class="post subsections">
+    <a class="post-link" href="/posts/{{post.post_id}}">
     <h3>{{post.topic.name}}</h3>
     <section class="posts">
-      <a class="post-link" href="/posts/{{post.post_id}}">
         <!-- Display the post title -->
         <h4><q>{{post.title}}</q></h4>
-      </a>
       <!-- Display the post content -->
+      <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.name}}">
       <p>{{post.text_content}}</p>
       <p>By: {{formatDate post.user.username}}</p>
       <p>Written on: {{formatDate post.created_at}}</p>
     </section>
+      </a>
   </article>
 {{/each}}
 

@@ -5,14 +5,11 @@
         /* TEXT COLORS */
         --main-textcolor: rgb(181, 241, 255);
         /* SHADOW COLORS */
-        --shadowcolor: rgb(0, 136, 255);
+        --shadowcolor: rgba(0, 136, 255, 0.1);
         --alt-shadowcolor: rgba(0, 136, 255, 0.739);
         --alt-b-shadowcolor: rgba(105, 193, 255, 0.685);
     /* TEXT EFFECTS */
-        --base-textshadow: -1px 1px 1px var(--shadowcolor),
-        1px 1px 1px var(--shadowcolor),
-        -1px -1px 1px var(--shadowcolor),
-        1px -1px 1px var(--shadowcolor);
+        --base-textshadow: -1px 1px var(--main-bkgcolor);
         --alt-textshadow: -1px 1px 1px var(--alt-shadowcolor),
         1px 1px 1px var(--alt-shadowcolor),
         -1px -1px 1px var(--alt-shadowcolor),
