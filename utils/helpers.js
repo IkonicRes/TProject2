@@ -130,5 +130,13 @@ deletePost: async function (postId) {
       hour12: true
     };
     return date.toLocaleString('en-US', options);
-  }
+  },
+//   fetchAndDisplayAPOD: async function () {
+//     try {
+
+//         console.log('APOD:', APOD);
+//     } catch (error) {
+//         console.error('Error fetching APOD:', error);
+//     }
+// }
 };

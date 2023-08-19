@@ -3,6 +3,7 @@ const { Topic, Post, Comment, User, Like } = require('../models');
 const { Sequelize } = require('../config/connection')
 const { isAuthenticated } = require('../utils/auth');
 const { deletePost } = require ('../utils/helpers');
+const axios = require('axios');
 router.post('/', isAuthenticated, async (req, res) => {
   try {
     const { title, topics, post } = req.body;
@@ -83,13 +84,19 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         limit: 10, // Limit to a certain number of posts
       });
       let result;
+      const date = "2021-12-17"
       const posts = postsData.map((post) => post.get({ plain: true }));
+      const apiKey = 'hvCBU5IjwIm9TjUgNr2Ei551uYe2vasCjcJKpKkY'; // Replace with your actual NASA API key
+      const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`;
+      const response = await axios.get(apiUrl);
+      const APOD = response.data
       if (req.user){
-      result = { posts: posts, user: req.user.username }
+      result = { posts: posts, user: req.user.username, APOD: APOD }
       }
       else {
       result = { posts: posts }
       }
+
       res.render('feed', result ); // Pass the authenticated user to the template
     } catch (error)
     {

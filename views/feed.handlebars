@@ -6,10 +6,17 @@
 Care to share your thoughts?
       </h2>
       <section class="add-post">
+        <section class="APOD">
+          <div id="apod-main">
+            <img class="animatedImage" src="{{APOD.hdurl}}" alt="{{APOD.title}}">
+            <p class="animatedDescription">{{APOD.title}}</p>
+          </div>
+          <p class="animatedDescription">{{APOD.explanation}}</p>
+        </section>
         <textarea id="animatedTextarea" class="hidden"></textarea>
         <div id="post-buttons">
           <button id="animatedButton1" class="post-button">Make a new signal</button>
-          <button id="animatedButton2" class="post-button">Post a random NASA photo and what you found about it.</button>
+          <button id="animatedButton2" class="post-button">Post the NASA APOD</button>
           <button id="animatedButton3" class="post-button">Post a random NASA photo and what you found about it.</button>
           <button id="animatedButton4" class="post-button">Submit your signal</button>
         </div>
@@ -17,11 +24,16 @@ Care to share your thoughts?
     </section>
 <script>
         // Your JavaScript code for this specific view
-        const animateButton = document.getElementById('animatedButton1');
+        const animatedButton = document.getElementById('animatedButton1');
+        const animatedButton2 = document.getElementById('animatedButton2');
         const animatedTextarea = document.getElementById('animatedTextarea');
-
-        animateButton.addEventListener('click', () => {
+        const animatedImage = document.getElementsByClassName('animatedImage')[0];
+        animatedButton.addEventListener('click', () => {
             animatedTextarea.classList.toggle('visible');
+        });
+        animatedButton2.addEventListener('click', () => {
+            animatedImage.classList.toggle('visible');
+            animatedTextarea.setAttribute('visible', 'true');
         });
   </script>
 {{/if}}
