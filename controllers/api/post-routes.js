@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Topic, Post, Comment } = require('../../models');
-
+const {sortOrbit} = require('../../utils/nlp');
 // GET all posts
 router.get('/', async (req, res) => {
   try {
@@ -42,8 +42,9 @@ router.post('/', async (req, res) => {
   try {
     // Assuming your authentication module sets up the user ID in the session
     const userId = req.user.user_id; // Adjust the property name based on your user model
-
+    console.log(req.body)
     // Create a new post associated with the user's ID
+
     const postData = await Post.create({
       title: req.body.title,
       text_content: req.body.text_content,
@@ -52,7 +53,8 @@ router.post('/', async (req, res) => {
         url: req.body.media_url,
       },
       topic_id: req.body.topic_id,
-      poster_id: userId, // Assuming your Post model's field name is "poster_id"
+      poster_id: userId,
+      apod_id: req.body.APOD,
     });
 
     // Redirect to the "feed" page after successful post creation
@@ -114,8 +116,8 @@ router.post('/:id/new', async (req, res) => {
       },
     };
     
-    console.log('Update Options:', updateOptions);
-    console.log
+    // console.log('Update Options:', updateOptions);
+    // console.log
     const post = await Post.findByPk(req.params.id);
     post.text_content = req.body.text_content
     await post.save()

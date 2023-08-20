@@ -105,12 +105,12 @@ router.post('/:id/like',  async (req, res) => {
     let plainComment = comment.get({ plain: true });
     let currentUserId = await req.cookies.userId;
     commentLikes = plainComment.likes;
-    console.log('🚀 ~ file: rendered.js:193 ~ router.post ~ userId:', commentLikes)
+    // console.log('🚀 ~ file: rendered.js:193 ~ router.post ~ userId:', commentLikes)
     // console.log("🚀 ~ file: rendered.js:209 ~ router.post ~ userId:", userId)
     // Populate the userMap
     // Check if the user has already liked the post or comment
     const existingLike = commentLikes.find(like => like.user.user_id == currentUserId);
-    console.log('existingLike:', existingLike);
+    // console.log('existingLike:', existingLike);
     const likeIncrementData = comment_Id ? { comment_id: comment_Id } : { post_id: postId };
     if (existingLike) {
       const errorMessage = 'You have already liked this.';
@@ -157,7 +157,7 @@ router.post('/:id/new', async (req, res) => {
       console.log('Comment not found.');
       return res.status(404).json({ error: 'Comment not found.' });
     }
-    console.log('comment:', req.body);
+    // console.log('comment:', req.body);
     comment.content = req.body.text_content;
     await comment.save();
     // Redirect to the post with the updated comment scrolled into view

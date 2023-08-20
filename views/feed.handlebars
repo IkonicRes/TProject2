@@ -7,18 +7,29 @@ Care to share your thoughts?
       </h2>
       <section class="add-post">
         <section class="APOD">
-          <div id="apod-main">
+          <div id="apod-main" class="random-apod">
             <img class="animatedImage" src="{{APOD.hdurl}}" alt="{{APOD.title}}">
-            <p class="animatedDescription">{{APOD.title}}</p>
+            <p id="apod-title" class="animatedDescription">{{APOD.title}}</p>
           </div>
-          <p class="animatedDescription">{{APOD.explanation}}</p>
+          <p id="apod-explanation" class="animatedDescription">{{APOD.explanation}}</p>
         </section>
-        <textarea id="animatedTextarea" class="hidden"></textarea>
+        <div style="display: flex; flex-direction: row;">
+          <p class="hidden" id="animatedHeader">Signal Header:</p>
+          <input id="animatedInput" type="text" name="title" class="hidden" id="title">
+        </div>
+        <textarea id="animatedTextarea" name="text_content" class="hidden"></textarea>
         <div id="post-buttons">
           <button id="animatedButton1" class="post-button">Make a new signal</button>
-          <button id="animatedButton2" class="post-button">Post the NASA APOD</button>
-          <button id="animatedButton3" class="post-button">Post a random NASA photo and what you found about it.</button>
-          <button id="animatedButton4" class="post-button">Submit your signal</button>
+          {{!-- <form action="/api/APOD" method="post"> --}}
+          <button id="animatedButton2" class="post-button" >Make a signal with NASA APOD</button>
+          {{!-- </form> --}}
+          <button id="animatedButton3" class="post-button">Make a signal with a random APOD</button>
+          <form action="/" method="post">
+          <input type="hidden" name="title" value="{{title}}">
+          <input type="hidden" name="text_content" value="{{text_content}}">
+          <input type="hidden" name="apod_data" value="{{APOD}}">
+            <button id="animatedButton4" type="submit" class="post-button">Submit your signal</button>
+          </form>
         </div>
       </section>
     </section>
@@ -30,12 +41,67 @@ Care to share your thoughts?
         const animatedImage = document.getElementsByClassName('animatedImage')[0];
         animatedButton.addEventListener('click', () => {
             animatedTextarea.classList.toggle('visible');
+            animatedInput.classList.toggle('visible');
+            animatedHeader.classList.toggle('visible');
         });
         animatedButton2.addEventListener('click', () => {
             animatedImage.classList.toggle('visible');
             animatedTextarea.setAttribute('visible', 'true');
         });
   </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+$(document).ready(function() {
+  $('#animatedButton3').on('click', function() {
+    // Make the AJAX request to your /random endpoint
+    $.ajax({
+      type: 'GET',
+      url: '/api/APOD/random', // Your endpoint URL
+      success: function(data) {
+        // Update the APOD content with the received data
+        APOD = data
+        const apodMain = $('#apod-main');
+        apodMain.find('.animatedImage').attr('src', data.hdurl);
+        apodMain.find('#apod-title').text(data.title);
+        $('#apod-explanation').text(data.explanation);
+      },
+      error: function(error) {
+        console.error('Error fetching random APOD:', error);
+      }
+    });
+  });
+  $('#animatedButton2').on('click', function() {
+    // Make the AJAX request to your /random endpoint
+    $.ajax({
+      type: 'GET',
+      url: '/api/APOD/', // Your endpoint URL
+      success: function(data) {
+        APOD = data
+        // Update the APOD content with the received data
+        const apodMain = $('#apod-main');
+        apodMain.find('.animatedDescription').text(data.title);
+        $('#apod-explanation').text(data.explanation);
+
+        // Check if media_type is 'image' or 'video'
+        if (data.media_type === 'image') {
+          // Update the image src and alt attributes
+          apodMain.find('.animatedImage').attr('src', data.url);
+          apodMain.find('.animatedImage').attr('alt', data.title);
+        } else if (data.media_type === 'video') {
+          // Create and append a video thumbnail image
+          const videoThumbnail = $('<img>').addClass('video-thumbnail').attr('src', data.url).attr('alt', data.title);
+          apodMain.prepend(videoThumbnail);
+        }
+      },
+      error: function(error) {
+        console.error('Error fetching random APOD:', error);
+      }
+    });
+  });
+});
+</script>
+
 {{/if}}
     <!-- Loop over each post in the 'posts' array -->
 {{#each posts as |post|}}

@@ -59,6 +59,13 @@ Post.init(
         key: 'topic_id',
       },
     },
+    apod_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      references: {
+        model: 'apod',
+        key: 'apod_id',
+      },
+    }
   },
   // Define the model options
   {

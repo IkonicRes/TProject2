@@ -137,10 +137,11 @@ img {
 
 #user-field {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     /* align-items: flex-end; */
-    justify-content: space-between;
-    /* margin-right: 8vw; */
+    justify-content: flex-start;
+    flex-basis: 10%;
+    margin-right: 8vw;
     border: none!important;
     /* align-self: flex-end; */
     background-color: rgba(0, 0, 0, 0.518);
@@ -212,10 +213,10 @@ main {
 }
 
 #animatedTextarea {
-    margin: 0;
     height: 15vh;
     background: var(--alt-bkgcolor);
     border:none;
+    width: 66vw!important;
     resize: none;
 }
 
@@ -226,13 +227,12 @@ main {
     border:none;
     resize: none;
 }
-/* textarea:focus {
+textarea:focus {
     border-style: none;
     border-color: Transparent;
     overflow: auto;
     outline: none;
-     */
-/* } */
+}
 #animatedButton1 {
     border-radius: 0 0 0 15px;
     border-color: Transparent;
@@ -374,7 +374,7 @@ h4 {
     flex-basis: 90vw;
 }
 .feed {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     padding: 2vh 2.5vw 2vh 2.5vw!important;
     display: flex!important;
     flex-direction: column!important;
@@ -395,7 +395,7 @@ h4 {
 
 }
 .post-button {
-    width: 15vw;
+    width: 16.5vw;
     height: 2rem;
     background-color: rgba(13, 158, 255, 0.759);
     border-radius: 20px;

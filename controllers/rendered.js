@@ -1,14 +1,16 @@
 const router = require('express').Router();
-const { Topic, Post, Comment, User, Like } = require('../models');
+const { Topic, Post, Comment, User, Like, APOD } = require('../models');
 const { Sequelize } = require('../config/connection')
 const { isAuthenticated } = require('../utils/auth');
 const { deletePost } = require ('../utils/helpers');
 const axios = require('axios');
+const {labeledData, sortOrbit} = require('../utils/nlp');
 router.post('/', isAuthenticated, async (req, res) => {
   try {
-    const { title, topics, post } = req.body;
+    const { title, topics, post, APOD } = req.body;
+     console.log(req.body)
+    // sortOrbit(APOD.explanation);
     const selectedTopic = await Topic.findOne({ where: { name: topics } });
-
     if (selectedTopic) {
       const newestPost = await Post.create({
         title: title,
@@ -84,7 +86,9 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         limit: 10, // Limit to a certain number of posts
       });
       let result;
-      const date = "2021-12-17"
+      let date = new Date();
+
+      date = formatDate(date);
       const posts = postsData.map((post) => post.get({ plain: true }));
       const apiKey = 'hvCBU5IjwIm9TjUgNr2Ei551uYe2vasCjcJKpKkY'; // Replace with your actual NASA API key
       const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`;
@@ -295,7 +299,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         });
         console.log('soooooooo close')
         const updatedRows = await Post.decrement('likes', { by: 1, where: likeIncrementData });
-        console.log('updatedRows:',updatedRows)
+        // console.log('updatedRows:',updatedRows)
         return res.redirect('/posts/' + postId);      
       }
   
@@ -490,6 +494,11 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       isAuthenticated: req.isAuthenticated(),
     });
   })
-
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   module.exports = router;

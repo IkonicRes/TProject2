@@ -4,6 +4,7 @@ const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
 const Like = require('./Like');
+const Apod = require('./APOD');
 
 // Define the associations between the models
 
@@ -17,6 +18,7 @@ Post.belongsTo(User, { foreignKey: 'poster_id' });
 Post.belongsTo(Topic, { foreignKey: 'topic_id' });
 Post.hasMany(Comment, { foreignKey: 'post_id' });
 Post.hasMany(Like, { foreignKey: 'post_id'});
+Post.hasOne(Apod, { foreignKey: 'apod_id' });
 
 Comment.belongsTo(User, { foreignKey: 'comment_poster_id' });
 Comment.belongsTo(Post, { foreignKey: 'post_id' });
@@ -32,5 +34,6 @@ module.exports = {
   User,
   Post,
   Comment,
-  Like
+  Like,
+  Apod
 };
