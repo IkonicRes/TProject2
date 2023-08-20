@@ -77,6 +77,7 @@
                             <!-- Display the logout button if the user is logged in -->
                             <a href="/logout" class="logout-button">Logout</a>
                             {{else}}
+                            <a href="/login" class="logout-button">Login</a>
                                 {{#unlessTemplate 'login' body}}
                                 {{#unlessTemplate 'signup' body}}
                                 {{#unlessTemplate 'about' body}}
