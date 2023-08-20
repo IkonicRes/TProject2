@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
   try {
     // Assuming your authentication module sets up the user ID in the session
     const userId = req.user.user_id; // Adjust the property name based on your user model
-    console.log(req.body)
+    // console.log(req.body)
     // Create a new post associated with the user's ID
 
     const postData = await Post.create({

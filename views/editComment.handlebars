@@ -5,6 +5,22 @@
     <article class="single-post">
         <!-- Display the post title -->
         <h2><q>{{post.title}}</q></h2>
+        {{#if post.apod}}
+        <section class="APOD">
+          <div id="apod-main" class="random-apod">
+        <div id="image-container">
+            <img class="animatedImage" src="{{post.apod.hdurl}}" alt="{{post.apod.title}}">
+        </div>
+            <p id="apod-title" class="animatedDescription">{{post.apod.title}}</p>
+          </div>
+          <p id="apod-explanation" class="animatedDescription">{{post.apod.explanation}}</p>
+        </section>
+        <!-- Display the post title -->
+        {{else}}
+        <div id="image-container">
+            <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.title}}">
+        </div>
+        {{/if}}
         <!-- Display the post content -->
         <p>{{post.text_content}}</p>
         <!-- Log the current user to the console with a custom message -->

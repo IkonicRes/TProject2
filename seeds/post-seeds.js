@@ -3,7 +3,7 @@ const { Post } = require('../models');
 const postData = [
   {
     poster_id: 1,
-    likes: 0,
+    likeys: 0,
     title: "First Post",
     mediaSource: {
       url: 'https://picsum.photos/seed/picsum/1920/1080',
@@ -14,7 +14,7 @@ const postData = [
   },
   {
     poster_id: 2,
-    likes: 0,
+    likeys: 0,
     title: "Second Post",
     mediaSource: {
       url: 'https://picsum.photos/seed/picsum/1920/1080',
@@ -25,7 +25,7 @@ const postData = [
   },
   {
     poster_id: 1,
-    likes: 0,
+    likeys: 0,
     title: "Third Post",
     mediaSource: {
       url: 'https://picsum.photos/seed/picsum/1920/1080',
@@ -36,7 +36,7 @@ const postData = [
   },
   {
     poster_id: 2,
-    likes: 0,
+    likeys: 0,
     title: "Fourth Post",
     mediaSource: {
       url: 'https://picsum.photos/seed/picsum/1920/1080',
@@ -47,7 +47,7 @@ const postData = [
   },
   {
     poster_id: 2,
-    likes: 0,
+    likeys: 0,
     title: "Fifth Post",
     mediaSource: {
       url: 'https://picsum.photos/seed/picsum/1920/1080',
@@ -58,7 +58,7 @@ const postData = [
   },
   {
     poster_id: 3,
-    likes: 0,
+    likeys: 0,
     title: "I think cheeseburgers are underrated",
     mediaSource: {
       url: 'https://picsum.photos/seed/picsum/1920/1080',

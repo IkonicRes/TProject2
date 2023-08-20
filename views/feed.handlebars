@@ -5,6 +5,7 @@
       <h2>
 Care to share your thoughts?
       </h2>
+          <form action="/" method="POST">
       <section class="add-post">
         <section class="APOD">
           <div id="apod-main" class="random-apod">
@@ -19,15 +20,16 @@ Care to share your thoughts?
         </div>
         <textarea id="animatedTextarea" name="text_content" class="hidden"></textarea>
         <div id="post-buttons">
-          <button id="animatedButton1" class="post-button">Make a new signal</button>
+          <button id="animatedButton1" type="button" class="post-button">Make a new signal</button>
           {{!-- <form action="/api/APOD" method="post"> --}}
-          <button id="animatedButton2" class="post-button" >Make a signal with NASA APOD</button>
+          <button id="animatedButton2" type="button" class="post-button">Make a signal with NASA APOD</button>
           {{!-- </form> --}}
-          <button id="animatedButton3" class="post-button">Make a signal with a random APOD</button>
-          <form action="/" method="post">
+          <button id="animatedButton3" type="button" class="post-button">Make a signal with a random APOD</button>
+          <input type="hidden" name="title" value="{{withApod}}">
           <input type="hidden" name="title" value="{{title}}">
           <input type="hidden" name="text_content" value="{{text_content}}">
-          <input type="hidden" name="apod_data" value="{{APOD}}">
+          {{consoleLog APOD}}
+          <input id="apod-object" type="hidden" name="APOD" value="{{APOD}}">
             <button id="animatedButton4" type="submit" class="post-button">Submit your signal</button>
           </form>
         </div>
@@ -35,26 +37,55 @@ Care to share your thoughts?
     </section>
 <script>
         // Your JavaScript code for this specific view
+        const apodAttached = true;
+        const submitButton = document.getElementById('animatedButton4');
         const animatedButton = document.getElementById('animatedButton1');
         const animatedButton2 = document.getElementById('animatedButton2');
+        const animatedButton3 = document.getElementById('animatedButton3');
         const animatedTextarea = document.getElementById('animatedTextarea');
         const animatedImage = document.getElementsByClassName('animatedImage')[0];
+       
+          console.log(animatedButton2.classList)
         animatedButton.addEventListener('click', () => {
             animatedTextarea.classList.toggle('visible');
             animatedInput.classList.toggle('visible');
             animatedHeader.classList.toggle('visible');
         });
         animatedButton2.addEventListener('click', () => {
+          if (!animatedTextarea.classList.contains('visible')) {
+            animatedTextarea.classList.toggle('visible');
+            animatedInput.classList.toggle('visible');
+            animatedHeader.classList.toggle('visible');
+          }
+        });
+        animatedButton3.addEventListener('click', () => {
+          if (!animatedTextarea.classList.contains('visible')) {
+            animatedTextarea.classList.toggle('visible');
+            animatedInput.classList.toggle('visible');
+            animatedHeader.classList.toggle('visible');
+          }
+        });
+        animatedButton2.addEventListener('click', () => {
             animatedImage.classList.toggle('visible');
             animatedTextarea.setAttribute('visible', 'true');
         });
+        submitButton.addEventListener('click', () => {
+          fetch('/', method="post")
+        })
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
 $(document).ready(function() {
-  $('#animatedButton3').on('click', function() {
-    // Make the AJAX request to your /random endpoint
+
+  let APOD;
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  const getRandomAPOD = () => {
     $.ajax({
       type: 'GET',
       url: '/api/APOD/random', // Your endpoint URL
@@ -65,15 +96,15 @@ $(document).ready(function() {
         apodMain.find('.animatedImage').attr('src', data.hdurl);
         apodMain.find('#apod-title').text(data.title);
         $('#apod-explanation').text(data.explanation);
+        $('#apod-object').val(JSON.stringify(APOD));
       },
       error: function(error) {
         console.error('Error fetching random APOD:', error);
       }
     });
-  });
-  $('#animatedButton2').on('click', function() {
-    // Make the AJAX request to your /random endpoint
-    $.ajax({
+  }
+  const getAPOD = () => {
+     $.ajax({
       type: 'GET',
       url: '/api/APOD/', // Your endpoint URL
       success: function(data) {
@@ -93,11 +124,22 @@ $(document).ready(function() {
           const videoThumbnail = $('<img>').addClass('video-thumbnail').attr('src', data.url).attr('alt', data.title);
           apodMain.prepend(videoThumbnail);
         }
+        $('#apod-object').val(JSON.stringify(APOD));
       },
       error: function(error) {
         console.error('Error fetching random APOD:', error);
       }
     });
+  };
+  
+  getAPOD();
+
+  $('#animatedButton3').on('click', function() {
+    // Make the AJAX request to your /random endpoint
+    getRandomAPOD();
+  });
+  $('#animatedButton2').on('click', function() {
+    getAPOD();
   });
 });
 </script>
@@ -112,7 +154,11 @@ $(document).ready(function() {
         <!-- Display the post title -->
         <h4><q>{{post.title}}</q></h4>
       <!-- Display the post content -->
-      <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.name}}">
+      {{#if post.apod}}
+      <img class="feed-img" src="{{post.apod.hdurl}}" alt="{{post.apod.title}}">
+      {{else}}
+      <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.title}}">
+      {{/if}}
       <p>{{post.text_content}}</p>
       <p>By: {{formatDate post.user.username}}</p>
       <p>Written on: {{formatDate post.created_at}}</p>

@@ -119,7 +119,10 @@ deletePost: async function (postId) {
     // Returning the user's id if it exists, otherwise returning null
     return user ? user.id : null;
   },
-  formatDate: (date) => {
+  formatDateTime: (date) => {
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
     // console.log('Debug - date:', date);
     const options = {
       year: 'numeric',
@@ -131,6 +134,22 @@ deletePost: async function (postId) {
     };
     return date.toLocaleString('en-US', options);
   },
+  formatDate: (date) => {
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
+    // console.log('Debug - date:', date);
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    };
+    return date.toLocaleString('en-US', options);
+  },
+  apodHelper: (context) => {
+    return JSON.stringify(context)
+  },
+
 //   fetchAndDisplayAPOD: async function () {
 //     try {
 

@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
     
 
     // Send the created comment as a JSON response with a 201 status code
-    res.redirect(('/posts/' + req.body.post_id));
+    res.redirect(('/posts/' + req.body.post_id + '#Comment-' + newComment.comment_id));
   } catch (error) {
     console.error('Error creating comment:', error);
     // If an error occurs, send the error as a JSON response with a 400 status code
@@ -99,6 +99,7 @@ router.post('/:id/like',  async (req, res) => {
       include: [
         { model: Like, include: { model: User } },
         { model: User },
+
       ],
     });
     

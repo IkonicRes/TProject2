@@ -7,7 +7,7 @@
             <!-- If the user has posts -->
             {{#each userPosts as |post|}}
             <!-- Loop through each user post -->
-            <li><a href="#post{{post.dataValues.post_id}}">{{post.dataValues.title}}</a></li>
+            <li><a href="#post{{post.post_id}}">{{post.title}}</a></li>
             <!-- Display a link to each post -->
             {{/each}}
             {{else}}
@@ -31,13 +31,29 @@
     <ul class="post-list">
         {{#each userPosts as |post|}}
         <!-- Loop through each user post -->
-        <div class="subsections" id="post{{post.dataValues.post_id}}">
-            <a class="post-link" href="/posts/{{post.dataValues.post_id}}">
-                <h3><q>{{post.dataValues.title}}</q></h3>
+        <div class="subsections" id="post{{post.post_id}}">
+            <a class="post-link" href="/posts/{{post.post_id}}">
+                <h3><q>{{post.title}}</q></h3>
+                {{#if post.apod}}
+                <section class="APOD">
+                <div id="apod-main" class="random-apod">
+                <div id="image-container">
+                    <img class="animatedImage" src="{{post.apod.hdurl}}" alt="{{post.apod.title}}">
+                </div>
+                    <p id="apod-title" class="animatedDescription">{{post.apod.title}}</p>
+                </div>
+                <p id="apod-explanation" class="animatedDescription">{{post.apod.explanation}}</p>
+                </section>
                 <!-- Display the post title -->
-                <p>{{post.dataValues.text_content}}</p>
+                {{else}}
+                <div id="image-container">
+                    <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.title}}">
+                </div>
+                {{/if}}
+                <!-- Display the post title -->
+                <p>{{post.text_content}}</p>
                 <!-- Display the post content -->
-                <p>Written on: {{formatDate post.dataValues.created_at}}</p>
+                <p>Written on: {{formatDate post.created_at}}</p>
             </a>
         </div>
         {{/each}}

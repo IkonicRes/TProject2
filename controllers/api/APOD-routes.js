@@ -38,7 +38,7 @@ router.get('/random', async (req, res) => {
     const randomAPODResponse = await axios.get(apiUrl);
     const randomAPODData = randomAPODResponse.data; // Extract only the data
 
-    console.log("Random APOD data:", randomAPODData);
+    // console.log("Random APOD data:", randomAPODData);
 
     // Send the extracted data as a response
     res.json(randomAPODData);

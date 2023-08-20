@@ -1,29 +1,36 @@
 const router = require('express').Router();
-const { Topic, Post, Comment, User, Like, APOD } = require('../models');
+const { Topic, Post, Comment, User, Like, Apod } = require('../models');
 const { Sequelize } = require('../config/connection')
 const { isAuthenticated } = require('../utils/auth');
 const { deletePost } = require ('../utils/helpers');
 const axios = require('axios');
 const {labeledData, sortOrbit} = require('../utils/nlp');
+const { where } = require('sequelize');
 router.post('/', isAuthenticated, async (req, res) => {
   try {
-    const { title, topics, post, APOD } = req.body;
-     console.log(req.body)
-    // sortOrbit(APOD.explanation);
-    const selectedTopic = await Topic.findOne({ where: { name: topics } });
-    if (selectedTopic) {
-      const newestPost = await Post.create({
-        title: title,
-        poster_id: req.user.user_id, // Set the poster_id to user_id
-        topic_id: selectedTopic.topic_id,
-        text_content: post,
-        // Other fields as needed
-      });
-
-      return res.redirect(('/posts/' + newestPost.post_id));
+     const text_content = req.body.text_content[0]
+     const title = req.body.title[0]
+    //  console.log('logging stuff: ', title, text_content)
+    const apod = JSON.parse(req.body.APOD)
+    const existsAPOD = await Apod.findOne({ where: { url: apod.url } });
+    let newAPOD
+    if (!existsAPOD) {
+      newAPOD = await Apod.create(apod)
     }
-
-    return res.status(400).send('Selected topic does not exist.');
+    else {
+      newAPOD = existsAPOD
+    }
+    const sortedTopic = sortOrbit(apod.explanation);;
+    const selectedTopic = await Topic.findOne({ where: { name: sortedTopic.predictedOrbit } });
+    console.log(sortedTopic.confidence)
+    const newestPost = await Post.create({
+      title: title,
+      poster_id: req.user.user_id, // Set the poster_id to user_id
+      topic_id: selectedTopic.topic_id,
+      text_content: text_content,
+      apod_id: newAPOD.apod_id
+    })
+    res.redirect(('/posts/' + newestPost.post_id));
   } catch (error) {
     console.error('Error creating post:', error);
     res.status(500).send('An error occurred while creating the post.');
@@ -39,10 +46,12 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       include: [
         { model: User }, // Include the associated user data
         { model: Topic }, // Include the associated topic data
+        { model: Apod}
       ],
     });
+    const plainPosts = userPosts.map((post) => post.get({ plain: true }));
     let topicData = await Topic.findAll({
-      include: {
+      include: { 
         model: Post,
         include: [
           { model: Comment, order: [['likeys', 'DESC']] }, // Order comments by likes to get top comment
@@ -65,7 +74,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
 
       return plainTopic;
     });
-    res.render('profile', { user: req.user.username, userPosts: userPosts, topics: topics });
+    res.render('profile', { user: req.user.username, userPosts: plainPosts, topics: topics });
   } catch (error)
   {
     console.error('Error fetching user profile:', error);
@@ -81,24 +90,25 @@ router.get('/profile', isAuthenticated, async (req, res) => {
           { model: Comment },
           { model: Topic },
           { model: User },
+          { model: Apod }
         ],
         order: Sequelize.literal('RAND()'), // Fetch random posts
         limit: 10, // Limit to a certain number of posts
       });
       let result;
-      let date = new Date();
+      // let date = new Date();
 
-      date = formatDate(date);
+      // date = formatDate(date);
       const posts = postsData.map((post) => post.get({ plain: true }));
-      const apiKey = 'hvCBU5IjwIm9TjUgNr2Ei551uYe2vasCjcJKpKkY'; // Replace with your actual NASA API key
-      const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`;
-      const response = await axios.get(apiUrl);
-      const APOD = response.data
+      // const apiKey = 'hvCBU5IjwIm9TjUgNr2Ei551uYe2vasCjcJKpKkY'; // Replace with your actual NASA API key
+      // const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}`;
+      // const response = await axios.get(apiUrl);
+      // const APOD = response.data
       if (req.user){
-      result = { posts: posts, user: req.user.username, APOD: APOD }
+        result = { posts: posts, user: req.user.username }
       }
       else {
-      result = { posts: posts }
+        result = { posts: posts }
       }
 
       res.render('feed', result ); // Pass the authenticated user to the template
@@ -183,6 +193,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         include: [
           { model: Comment, include: [{model: User}], order: [['created_at', 'ASC']] },
           { model: User },
+          { model: Apod },
         ],
       });
   
@@ -235,6 +246,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       include: [
         { model: Comment, include: [{model: User}], order: [['created_at', 'ASC']] },
         { model: User },
+        { model: Apod },
       ],
       
     });
@@ -255,6 +267,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       include: [
         { model: Comment, include: [{ model: User }], order: [['created_at', 'ASC']] },
         { model: User },
+        { model: Apod },
       ],
     });
     const currentUserId = await req.cookies.userId;
@@ -271,6 +284,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         include: [
           { model: Comment, include: [{model: User}], order: [['created_at', 'ASC']] },
           { model: User },
+          { model: Apod },
         ],
         
       });
@@ -297,14 +311,14 @@ router.get('/profile', isAuthenticated, async (req, res) => {
             like_id: existingLike.like_id,
           },
         });
-        console.log('soooooooo close')
-        const updatedRows = await Post.decrement('likes', { by: 1, where: likeIncrementData });
+        // console.log('soooooooo close')
+        const updatedRows = await Post.decrement('likeys', { by: 1, where: likeIncrementData });
         // console.log('updatedRows:',updatedRows)
         return res.redirect('/posts/' + postId);      
       }
   
       // Increment the post's or comment's like count
-      const [updatedRows] = await Post.increment('likes', { where: likeIncrementData });
+      const [updatedRows] = await Post.increment('likeys', { where: likeIncrementData });
   
       if (updatedRows === 0) {
         // This means the post or comment to be liked does not exist
@@ -328,6 +342,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         include: [
           { model: Comment, include: [{model: User}], order: [['created_at', 'ASC']] },
           { model: User },
+          { model: Apod },
         ],
         
       });
@@ -342,6 +357,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         include: [
           { model: Comment, include: [{model: User}], order: [['created_at', 'ASC']] },
           { model: User },
+          { model: Apod },
         ],
         
       });
@@ -410,7 +426,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       });
       plainPost = post.get({ plain: true });
       // Redirect back to the same post route after processing the like
-      return res.render('post', { currentUser: currentUserId, post: plainPost });
+      return res.redirect('/posts/' + postId + '#Comment-' + commentId);
   
     } catch (error) {
       console.error('Error adding comment like:', error);
@@ -445,7 +461,13 @@ router.get('/profile', isAuthenticated, async (req, res) => {
         order: [['topic_id', 'ASC']], // You can adjust the order as needed
       });
 
-      let topics = topicData.map((topic) => {
+      let topics = topicData.filter((topic) => {
+        if (topic.posts.length > 0) {
+          return topic
+        }
+      })
+
+      topics = topics.map((topic) => {
         const plainTopic = topic.get({ plain: true });
 
         // For each post, find the top comment (if any)

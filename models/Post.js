@@ -17,6 +17,11 @@ Post.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    likeys: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0
+    },
     // Define the poster_id attribute
     poster_id: { 
       type: DataTypes.INTEGER.UNSIGNED,
