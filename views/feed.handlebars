@@ -160,7 +160,7 @@ $(document).ready(function() {
       <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.title}}">
       {{/if}}
       <p>{{post.text_content}}</p>
-      <p>By: {{formatDate post.user.username}}</p>
+      <p>By: {{post.user.username}}</p>
       <p>Written on: {{formatDate post.created_at}}</p>
     </section>
       </a>
