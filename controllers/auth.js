@@ -58,7 +58,7 @@ router.post('/login', passport.authenticate('local', {
 }), async (req, res) => {
   // Successful authentication
   const userId = req.user.user_id; // Get the user's ID from the authenticated user object 
-  const backUrl = req.body.backURL
+  const backUrl = req.body.backURL || '/';
 
   res.cookie('userId', userId); // Set the 'userId' cookie
 

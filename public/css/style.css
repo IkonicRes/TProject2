@@ -88,7 +88,7 @@ h4 > q {
     justify-content: space-between;
     align-items: center;
     background-color: rgba(0, 0, 0, .4);
-    width: 60vw;
+    width: 40rem;
     height: 11vh;
 }
 .navigation {
@@ -193,7 +193,13 @@ main {
     width: 100%;
 }
 .sidebar {
-    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 20vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
 #editbox {
     background-color: rgba(0, 200, 255, 0.759);
@@ -219,6 +225,13 @@ main {
     width: 66vw!important;
     resize: none;
 }
+#animatedInput {
+    height: 1.25rem;
+    background: var(--alt-bkgcolor);
+    border:none;
+    align-self: center;
+    resize: none;
+}
 
 #animatedImage {
     width: 55vw;
@@ -232,23 +245,41 @@ textarea:focus {
     border-color: Transparent;
     overflow: auto;
     outline: none;
+    color: black;
 }
 #animatedButton1 {
     border-radius: 0 0 0 15px;
     border-color: Transparent;
 }
 #animatedButton2 {
+    /* width:0; */
+    /* background-color: black; */
     border-radius: 0;
     border-color: Transparent;
 }
 #animatedButton3 {
+    /* width:0; */
+    /* background-color: black; */
     border-radius: 0;
     border-color: Transparent;
 }
 #animatedButton4 {
+    /* width:0; */
+    /* background-color: black; */
+    background-color: rgb(0, 168, 0)!important;
     border-radius: 0 0 15px 0;
     border-color: Transparent;
-    background-color: green;
+
+}
+#animatedButton1:hover ~ #animatedButton2,
+#animatedButton1:hover ~ #animatedButton3 {
+    /* background-color: rgba(0, 200, 255, 0.759)!important; */
+    /* width: 15vw!important; */
+}
+
+#animatedButton1:hover ~ #animatedButton4 {
+    /* transition-property: width 15vw 2s!important; */
+    /* background-color: rgb(0, 229, 0)!important; */
 }
 .APOD {
     background-color: rgba(0, 0, 0, 0.285);
@@ -277,7 +308,6 @@ textarea:focus {
     height: 80vh;
     position: relative; 
     overflow-y: scroll;
-    align-items: center;
 }
 
 .sidebar ul {
@@ -303,6 +333,7 @@ textarea:focus {
 }
 
 h3 {
+    margin-left: 3vw;
     font-size: var(--h3-textsize);
     text-shadow: var(--alt-textshadow);
 }
@@ -321,7 +352,7 @@ h4 {
 .like-button {
     margin-bottom:1rem!important;
     text-decoration: inherit;
-    color: inherit;
+    color: black;
     font-size: var(--h4-textsize);
     background-color: rgba(0, 200, 255, 0.759);
     border-radius: 10px;
@@ -333,6 +364,7 @@ h4 {
     padding: 1vw!important;
     width: 30vw;
     text-align: right!important;
+    margin-bottom: 3vh!important;
 }
 
 #login-header, #signup-header {
@@ -351,6 +383,7 @@ h4 {
 #comment {
     min-width: 70vw;
     min-height: 15vh;
+    color: black;
     background-color: rgba(0, 200, 255, 0.759);
 }
 .add-comment {
@@ -371,7 +404,7 @@ h4 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex-basis: 90vw;
+    /* flex-basis: 90vw; */
 }
 .feed {
     margin-bottom: 40px;
@@ -384,6 +417,7 @@ h4 {
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
+    background-color: ;
     /* padding-right: 40vw; */
     border-color: var(--main-bkgcolor)
 }
@@ -399,14 +433,14 @@ h4 {
     height: 2rem;
     background-color: rgba(13, 158, 255, 0.759);
     border-radius: 20px;
-    font-weight: 800;
+    font-weight: 1000;
     font-size: calc(var(--h4-textsize) / 1.5);    
-
+    color: rgb(0, 0, 0)!important;
 
     /* text-shadow: var(--shadowcolor); */
 }
 .post-button > button{
-    color: var(rgb(0, 0, 0))!important;
+    color: rgb(0, 0, 0)!important;
 }
 .sections {
     display: column;
@@ -469,7 +503,7 @@ h4 {
 }
 .work-link {
     text-decoration: inherit;
-    font-size: var(--h4-textsize);
+    font-size: .75rem;
     color: inherit;
 }
 #topics, #topics > option{
@@ -484,6 +518,7 @@ h4 {
 
 .post-list{
     text-align:center;
+    margin-right: 3vw;
 }
 
 .subsections {
@@ -491,7 +526,7 @@ h4 {
     border: 1px rgba(0, 255, 255, 0.512) solid;
     border-radius: 7px;
     margin-bottom: 1.5vh;
-    min-width: 85vw;
+    /* min-width: 85vw; */
 }
 
 .subsections > * {
