@@ -29,7 +29,8 @@ const topicData = [
   {name:"Cosmic Giants: Massive Galaxies"},
   {name:"Quasar Mysteries: Active Galactic Nuclei"},
   {name:"Stellar Dance: Binary Star Systems"},
-  {name:"Interstellar Sculptures: Cosmic Sculptures"}
+  {name:"Interstellar Sculptures: Cosmic Sculptures"},
+  {name:"General Discussion"},
 ];
 
 const seedTopics = async () => {

@@ -9,7 +9,7 @@ const Apod = require('./APOD');
 // Define the associations between the models
 
 // Each Topic has many Posts
-Topic.hasMany(Post, { foreignKey: 'post_id' });
+Topic.hasMany(Post, { foreignKey: 'topic_id' });
 User.hasMany(Post, { foreignKey: 'poster_id' });
 Apod.hasMany(Post, { foreignKey: 'apod_id' });
 User.hasMany(Comment, { foreignKey: 'user_id' });

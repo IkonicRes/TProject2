@@ -48,45 +48,10 @@
                     x.style.display = "inherit";
                 }
             }
-        // Your JavaScript code for this specific view
-        const apodAttached = true;
-        const submitButton = document.getElementById('animatedButton4');
-        const animatedButton = document.getElementById('animatedButton1');
-        const animatedButton2 = document.getElementById('animatedButton2');
-        const animatedButton3 = document.getElementById('animatedButton3');
-        const animatedTextarea = document.getElementById('animatedTextarea');
-        const animatedImage = document.getElementsByClassName('animatedImage')[0];
-       
-          console.log(animatedButton2.classList)
-        animatedButton.addEventListener('click', () => {
-            animatedTextarea.classList.toggle('visible');
-            animatedInput.classList.toggle('visible');
-            animatedHeader.classList.toggle('visible');
-        });
-        animatedButton2.addEventListener('click', () => {
-          if (!animatedTextarea.classList.contains('visible')) {
-            animatedTextarea.classList.toggle('visible');
-            animatedInput.classList.toggle('visible');
-            animatedHeader.classList.toggle('visible');
-          }
-        });
-        animatedButton3.addEventListener('click', () => {
-          if (!animatedTextarea.classList.contains('visible')) {
-            animatedTextarea.classList.toggle('visible');
-            animatedInput.classList.toggle('visible');
-            animatedHeader.classList.toggle('visible');
-          }
-        });
-        animatedButton2.addEventListener('click', () => {
-            animatedImage.classList.toggle('visible');
-            animatedTextarea.setAttribute('visible', 'true');
-        });
-        submitButton.addEventListener('click', () => {
-          fetch('/', method="post")
-        })
+
   </script>
 </head>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
     {{!-- {{fetchAndDisplayAPOD}} --}}
     <!-- Output the value of the 'isAuthenticated' variable to the console -->

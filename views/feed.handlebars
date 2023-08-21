@@ -32,6 +32,7 @@
           <button id="animatedButton3" type="button" class="post-button">Make a signal with a random APOD</button>
           <input type="hidden" name="title" value="{{withApod}}">
           <input type="hidden" name="title" value="{{title}}">
+          <input type="hidden" id="apod_attached" name="apod_attached" value='false'>
           <input type="hidden" name="text_content" value="{{text_content}}">
           {{consoleLog APOD}}
           <input id="apod-object" type="hidden" name="APOD" value="{{APOD}}">
@@ -66,13 +67,50 @@
 </section>
 {{/if}}
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
-    
 $(document).ready(function() {
-
+  
   let APOD;
+          // Your JavaScript code for this specific view
+        const submitButton = document.getElementById('animatedButton4');
+        const animatedButton = document.getElementById('animatedButton1');
+        const animatedButton2 = document.getElementById('animatedButton2');
+        const animatedButton3 = document.getElementById('animatedButton3');
+        const animatedTextarea = document.getElementById('animatedTextarea');
+        const animatedImage = document.getElementsByClassName('animatedImage')[0];
+       
+          console.log(animatedButton2.classList)
+        animatedButton.addEventListener('click', () => {
+            animatedTextarea.classList.toggle('visible');
+            animatedInput.classList.toggle('visible');
+            animatedHeader.classList.toggle('visible');
+            
+        });
+        animatedButton.addEventListener('click', () => {
+          $('.post-button').addClass('expanded');
+
+        })
+        animatedButton2.addEventListener('click', () => {
+          if (!animatedTextarea.classList.contains('visible')) {
+            animatedTextarea.classList.toggle('visible');
+            animatedInput.classList.toggle('visible');
+            animatedHeader.classList.toggle('visible');
+
+          }
+          $('#apod_attached')[0].value = 'true'
+        });
+        animatedButton3.addEventListener('click', () => {
+          if (!animatedTextarea.classList.contains('visible')) {
+            animatedTextarea.classList.toggle('visible');
+            animatedInput.classList.toggle('visible');
+            animatedHeader.classList.toggle('visible');
+          }
+          $('#apod_attached')[0].value = 'true'
+        });
+        submitButton.addEventListener('click', () => {
+          fetch('/', method="post")
+        })
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');

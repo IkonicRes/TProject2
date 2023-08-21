@@ -11,18 +11,26 @@ router.post('/', isAuthenticated, async (req, res) => {
      const text_content = req.body.text_content[0]
      const title = req.body.title[0]
     //  console.log('logging stuff: ', title, text_content)
-    const apod = JSON.parse(req.body.APOD)
-    const existsAPOD = await Apod.findOne({ where: { url: apod.url } });
+    console.log("req.body.APOD: ",req.body)
+    let selectedTopic;
     let newAPOD
-    if (!existsAPOD) {
-      newAPOD = await Apod.create(apod)
+    if (req.body.apod_attached == 'true') {
+      const apod = JSON.parse(req.body.APOD)
+      const existsAPOD = await Apod.findOne({ where: { url: apod.url } });
+      if (!existsAPOD) {
+        newAPOD = await Apod.create(apod)
+      }
+      else {
+        newAPOD = existsAPOD
+      }
+      const sortedTopic = sortOrbit(apod.explanation);;
+      selectedTopic = await Topic.findOne({ where: { name: sortedTopic.predictedOrbit } });
+      console.log(sortedTopic.confidence)
     }
-    else {
-      newAPOD = existsAPOD
+    else{
+      selectedTopic = await Topic.findOne({ where: { name: 'General Discussion' }});
+      newAPOD = {apod_id: null}
     }
-    const sortedTopic = sortOrbit(apod.explanation);;
-    const selectedTopic = await Topic.findOne({ where: { name: sortedTopic.predictedOrbit } });
-    console.log(sortedTopic.confidence)
     const newestPost = await Post.create({
       title: title,
       poster_id: req.user.user_id, // Set the poster_id to user_id
@@ -455,12 +463,14 @@ router.get('/profile', isAuthenticated, async (req, res) => {
           include: [
             { model: Comment, order: [['likeys', 'DESC']] }, // Order comments by likes to get top comment
             { model: User },
+            { model: Apod }
+
             // Include any other necessary associations
           ],
         },
         order: [['topic_id', 'ASC']], // You can adjust the order as needed
       });
-
+      console.log(topicData)
       let topics = topicData.filter((topic) => {
         if (topic.posts.length > 0) {
           return topic
