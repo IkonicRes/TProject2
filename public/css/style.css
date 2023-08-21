@@ -308,7 +308,12 @@ textarea:focus {
     height: 80vh;
     position: relative; 
     overflow-y: scroll;
+
 }
+
+#sidebar-nav::-webkit-scrollbar {
+    display: none;
+  }
 
 .sidebar ul {
     list-style-type: none;
