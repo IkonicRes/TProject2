@@ -52,3 +52,5 @@ You can find the database schema in the ./db/schema.sql file.
 4. Users can browse and view previously posted images.
 
 ## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
