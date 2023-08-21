@@ -78,6 +78,7 @@
                         <div id="user-field">
                             <!-- Check if the 'user' variable exists -->
                             {{#if user}}
+                            {{#unlessTemplate 'about' body}}
                             <!-- Display the logout button if the user is logged in -->
                             <a href="/logout" style="text-shadow:none;font-size: 1rem;" >Logout</a>
                             {{else}}
@@ -92,6 +93,7 @@
                                 {{/unlessTemplate}}
                                 {{/unlessTemplate}}
                                 {{/unlessTemplate}}
+                            {{/unlessTemplate}}
                             {{/if}}
 
 
