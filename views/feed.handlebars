@@ -2,10 +2,15 @@
 {{#if user}}
   <!-- Display feed content for authenticated users -->
     <section id="feed">
+      <div>
+          {{#if user}}
+          <p>Welcome, {{user}}!</p>
+          {{/if}}
       <h2>
-Care to share your thoughts?
+          Care to share your thoughts?
       </h2>
-          <form action="/" method="POST">
+      </div>
+           <form action="/" method="POST">
       <section class="add-post">
         <section class="APOD">
           <div id="apod-main" class="random-apod">
@@ -18,7 +23,7 @@ Care to share your thoughts?
           <p class="hidden" id="animatedHeader">Signal Header:</p>
           <input id="animatedInput" type="text" name="title" class="hidden" id="title">
         </div>
-        <textarea id="animatedTextarea" name="text_content" class="hidden"></textarea>
+        <textarea id="animatedTextarea" name="text_content" class="hidden" placeholder="Enter your signal's content here."></textarea>
         <div id="post-buttons">
           <button id="animatedButton1" type="button" class="post-button">Make a new signal</button>
           {{!-- <form action="/api/APOD" method="post"> --}}
@@ -35,47 +40,36 @@ Care to share your thoughts?
         </div>
       </section>
     </section>
-<script>
-        // Your JavaScript code for this specific view
-        const apodAttached = true;
-        const submitButton = document.getElementById('animatedButton4');
-        const animatedButton = document.getElementById('animatedButton1');
-        const animatedButton2 = document.getElementById('animatedButton2');
-        const animatedButton3 = document.getElementById('animatedButton3');
-        const animatedTextarea = document.getElementById('animatedTextarea');
-        const animatedImage = document.getElementsByClassName('animatedImage')[0];
-       
-          console.log(animatedButton2.classList)
-        animatedButton.addEventListener('click', () => {
-            animatedTextarea.classList.toggle('visible');
-            animatedInput.classList.toggle('visible');
-            animatedHeader.classList.toggle('visible');
-        });
-        animatedButton2.addEventListener('click', () => {
-          if (!animatedTextarea.classList.contains('visible')) {
-            animatedTextarea.classList.toggle('visible');
-            animatedInput.classList.toggle('visible');
-            animatedHeader.classList.toggle('visible');
-          }
-        });
-        animatedButton3.addEventListener('click', () => {
-          if (!animatedTextarea.classList.contains('visible')) {
-            animatedTextarea.classList.toggle('visible');
-            animatedInput.classList.toggle('visible');
-            animatedHeader.classList.toggle('visible');
-          }
-        });
-        animatedButton2.addEventListener('click', () => {
-            animatedImage.classList.toggle('visible');
-            animatedTextarea.setAttribute('visible', 'true');
-        });
-        submitButton.addEventListener('click', () => {
-          fetch('/', method="post")
-        })
-  </script>
+{{else}}
+<section class="sections login">
+    <!-- Login section -->
+    <p id="login-header">Login</p>
+    <form action="/login" method="POST">
+        <input type="hidden" name="backURL" value="{{backURL}}">
+        <!-- Login form -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <section id="login-submit">
+            <!-- Login submit section -->
+            <button class="login-button" type="submit">Login</button>
+        </section>
+    </form>
+    <p>Don't have an account? <a href="/signup">Signup</a></p>
+    <!-- Display an error message if it exists -->
+    {{#if message}}
+        <p class="error-message">{{ message }}</p>
+    {{/if}}
+</section>
+{{/if}}
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
+    
 $(document).ready(function() {
 
   let APOD;
@@ -144,7 +138,6 @@ $(document).ready(function() {
 });
 </script>
 
-{{/if}}
     <!-- Loop over each post in the 'posts' array -->
 {{#each posts as |post|}}
   <article class="post subsections">
@@ -159,7 +152,7 @@ $(document).ready(function() {
       {{else}}
       <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.title}}">
       {{/if}}
-      <p>{{post.text_content}}</p>
+      {{!-- <p>{{post.text_content}}</p> --}}
       <p>By: {{post.user.username}}</p>
       <p>Written on: {{formatDate post.created_at}}</p>
     </section>
