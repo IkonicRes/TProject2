@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 // Define the `/api/users/:user_id` endpoint for handling PUT requests
 router.put('/:user_id', async (req, res) => {
   // Update a user with the provided `user_id` using the data from the request body
-  try {
+  try {4
     // Perform the update operation
     const [rowsUpdated] = await User.update(req.body, {
       where: {

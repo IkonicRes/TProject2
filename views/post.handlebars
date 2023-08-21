@@ -3,8 +3,23 @@
 
 <section class="content sections single-post">
     <article class="single-post">
-        <!-- Display the post title -->
         <h2><q>{{post.title}}</q></h2>
+        {{#if post.apod}}
+        <section class="APOD">
+          <div id="apod-main" class="random-apod">
+        <div id="image-container">
+            <img class="animatedImage" src="{{post.apod.hdurl}}" alt="{{post.apod.title}}">
+        </div>
+            <p id="apod-title" class="animatedDescription">{{post.apod.title}}</p>
+          </div>
+          <p id="apod-explanation" class="animatedDescription">{{post.apod.explanation}}</p>
+        </section>
+        <!-- Display the post title -->
+        {{else}}
+        <div id="image-container">
+            <img class="feed-img" src="{{post.mediaSource.url}}" alt="{{post.mediaSource.title}}">
+        </div>
+        {{/if}}
         <!-- Display the post content -->
         <p>{{post.text_content}}</p>
         <!-- Log the current user to the console with a custom message -->
@@ -34,13 +49,13 @@
         <p>Posted by: {{post.user.username}}</p>
         {{!-- {{/async}} --}}
         <!-- Display the date the user posted the content -->
-        <p>Written on: {{formatDate post.created_at}}</p>
+        <p>Written on: {{formatDateTime post.created_at}}</p>
         <!-- Display the number of likes for the post -->
         <form action="/posts/{{post.post_id}}/like" method="POST">
         <input type="hidden" name="user_id" value="{{ post.user.user_id }}">
         <button class="like-button" type="submit">Like</button>
         </form>
-        <span class="likes">{{post.likes}} Likes</span>
+        <span class="likes">{{post.likeys}} Likes</span>
           <!-- Display the error message if it exists -->
         {{#if errorMessage}}
             <p class="error-message">{{ errorMessage }}</p>
@@ -71,7 +86,8 @@
                     <!-- Display the username of the user who commented -->
                     {{consoleLog 'Current Username: ' user}}
                     <p>Commented by: {{comment.user.username}}</p>
-                    <date>On: {{formatDate comment.created_at}}</date>
+                    {{!-- {{consoleLog {formatDate comment.created_at}}} --}}
+                    <p>On: {{formatDateTime comment.created_at}}</p>
                     <!-- Check if the comment has any likes -->
                     <!-- Display the number of likes for the post -->
                     <form action="/api/comments/{{comment.comment_id}}/like" method="POST">

@@ -13,6 +13,9 @@ const commentRoutes = require('./comment-routes');
 // Import the topic-routes module
 const topicRoutes = require('./topic-routes');
 
+// Import the APOD-routes module
+const apodRoutes = require('./APOD-routes');
+
 // Use the userRoutes module for requests that start with '/users'
 router.use('/users', userRoutes);
 
@@ -24,6 +27,8 @@ router.use('/comments', commentRoutes);
 
 // Use the topicRoutes module for requests that start with '/topics'
 router.use('/topics', topicRoutes);
+
+router.use('/APOD', apodRoutes);
 
 // Export the router module
 module.exports = router;

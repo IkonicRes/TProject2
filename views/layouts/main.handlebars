@@ -8,7 +8,7 @@
 
     <!-- Set the title of the page -->
     <title>SpaceBook</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Include CSS stylesheets -->
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/root.css">
@@ -16,6 +16,9 @@
 
     <!-- Define a JavaScript function to redirect to the '/addPost' route -->
     <script>
+    </script>
+    <script>
+        
         function redirectToAddPost() {
             window.location.href = '/addPost';
         }
@@ -29,6 +32,14 @@
     document.getElementById('modalOverlay').classList.add('active');
     document.getElementById('modalOverlay').setAttribute('data-post-id', postId);
   }
+    function menuButton() {
+    var x = document.getElementById("myLinks");
+    if (x.style.display === "inherit") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "inherit";
+    }
+    }
 
   function hideModal() {
     document.getElementById('modalOverlay').style.display = 'none';
@@ -39,6 +50,7 @@
 </head>
 
 <body>
+    {{!-- {{fetchAndDisplayAPOD}} --}}
     <!-- Output the value of the 'isAuthenticated' variable to the console -->
     {{!-- {{consoleLog 'IsAuthenticated:' isAuthenticated}} --}}
 
@@ -48,48 +60,59 @@
         <section id="title">
             <!-- Display the website name and description -->
             <h1><a href="/">SpaceBook</a></h1>
-            <h2>Connect with fellow outer-space enthusiasts!</h2>
+            <h4>Connect with fellow outer-space enthusiasts!</h4>
         </section>
+            <div id="navArea">
+                <section>
 
-        <!-- Define the user field section of the header -->
-        <section>
-            <div id="user-field">
-                <!-- Check if the 'user' variable exists -->
-                {{#if user}}
-                <!-- Display the logout button if the user is logged in -->
-                <a href="/logout" class="logout-button">Logout</a>
-                {{else}}
-                    {{#unlessTemplate 'login' body}}
-                    {{#unlessTemplate 'signup' body}}
-                    {{#unlessTemplate 'about' body}}
-                <!-- Display the login button if the user is not logged in -->
-                    <a href="/login" class="logout-button">Login</a>
-                    {{/unlessTemplate}}
-                    {{/unlessTemplate}}
-                    {{/unlessTemplate}}
-                {{/if}}
+                <!-- Define the navigation menu -->
+                <nav class="navigation">
+                    <a href="javascript:void(0);" class="icon" onclick="menuButton()">
+                        <i class="fa fa-bars fa-5x"></i>
+                    </a>
+                    <div id="myLinks">
+                        <div id="user-field">
+                            <!-- Check if the 'user' variable exists -->
+                            {{#if user}}
+                            <!-- Display the logout button if the user is logged in -->
+                            <a href="/logout" class="logout-button">Logout</a>
+                            {{else}}
+                            <a href="/login" class="logout-button">Login</a>
+                                {{#unlessTemplate 'login' body}}
+                                {{#unlessTemplate 'signup' body}}
+                                {{#unlessTemplate 'about' body}}
+                            <!-- Display the login button if the user is not logged in -->
+                                <a href="/login" class="logout-button">Login</a>
+                                {{/unlessTemplate}}
+                                {{/unlessTemplate}}
+                                {{/unlessTemplate}}
+                            {{/if}}
 
 
-                <!-- Check if the user is authenticated -->
-                {{#if isAuthenticated}}
-                    <!-- Check if the current page body is the 'feed' template -->
-                    {{#isTemplate 'feed' body}}
-                        <!-- Display a welcome message with the username -->
-                        <p>Welcome, {{user}}!</p>
-                        <!-- Output the value of the 'user' variable to the console -->
-                        {{!-- {{consoleLog 'User:' user}} --}}
-                    {{/isTemplate}}
-                {{/if}}
+                            <!-- Check if the user is authenticated -->
+                            {{#if isAuthenticated}}
+                                <!-- Check if the current page body is the 'feed' template -->
+                                {{#isTemplate 'feed' body}}
+                                    <!-- Display a welcome message with the username -->
+                                    <p>Welcome, {{user}}!</p>
+                                    <!-- Output the value of the 'user' variable to the console -->
+                                    {{!-- {{consoleLog 'User:' user}} --}}
+                                {{/isTemplate}}
+                            {{/if}}
+                        </div>
+                        <div id="nav-links">
+                            <a href="/">Home</a>
+                            <a href="/topics">Orbits</a>
+                            <a href="/profile">Profile</a>
+                            <a href="/about">About</a>
+                        </div>
+                    </div>
+                </nav>
+            </section>
             </div>
-
-            <!-- Define the navigation menu -->
-            <nav class="navigation">
-                <a href="/">Home</a>
-                <a href="/topics">Topics</a>
-                <a href="/profile">My Profile</a>
-                <a href="/about">About</a>
-            </nav>
-        </section>
+        
+        <!-- Define the user field section of the header -->
+       
     </header>
 
     <!-- Define the main content section of the page -->

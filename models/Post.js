@@ -17,6 +17,11 @@ Post.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    likeys: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0
+    },
     // Define the poster_id attribute
     poster_id: { 
       type: DataTypes.INTEGER.UNSIGNED,
@@ -33,6 +38,9 @@ Post.init(
       allowNull: false,
     },
     // Define the text_content attribute
+    mediaSource: { 
+      type: DataTypes.JSON,
+    },
     text_content: { 
       type: DataTypes.TEXT,
       allowNull: false,
@@ -47,9 +55,6 @@ Post.init(
       defaultValue: DataTypes.NOW,
     },
     // Define the media_url attribute
-    media_url: { 
-      type: DataTypes.STRING(255),
-    },
     // Define the topic_id attribute
     topic_id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -59,6 +64,13 @@ Post.init(
         key: 'topic_id',
       },
     },
+    apod_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      references: {
+        model: 'apod',
+        key: 'apod_id',
+      },
+    }
   },
   // Define the model options
   {

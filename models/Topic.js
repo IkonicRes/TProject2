@@ -23,7 +23,7 @@ Topic.init(
     // Defining the name attribute with the data type STRING(64)
     // allowNull set to false means this attribute is required
     name: {
-      type: DataTypes.STRING(64),
+      type: DataTypes.STRING(128),
       allowNull: false,
     },
   },
