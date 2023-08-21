@@ -43,11 +43,17 @@ You can find the database schema in the ./db/schema.sql file.
 
 ## Usage
 
-1. Access the website by opening a web browser and navigating to http://localhost:3001.
+1. Access the website by opening a web browser and navigating to https://spacebook-5e89d6d6f153.herokuapp.com/.
+
+![Alt text](./public/images/mainpage.png)
 
 2. Users can sign up and log in to post and view NASA images of the day.
 
+![Alt text](./public/images/login.png)
+
 3. To post an image of the day, users can provide the image title, description, and image URL.
+
+![Alt text](./public/images/makepost.png)
 
 4. Users can browse and view previously posted images.
 
