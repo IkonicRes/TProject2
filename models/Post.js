@@ -44,9 +44,6 @@ Post.init(
     text_content: { 
       type: DataTypes.TEXT,
       allowNull: false,
-      validate: {
-        len: [1]
-      }
     },
     // Defining the created_at attribute
     created_at: {
