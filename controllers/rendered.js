@@ -14,6 +14,10 @@ router.post('/', isAuthenticated, async (req, res) => {
     console.log("req.body.APOD: ",req.body)
     let selectedTopic;
     let newAPOD
+    if (!title || !text_content) {
+      req.flash('An error occurred while creating the post.');
+      return res.redirect('/');
+    }
     if (req.body.apod_attached == 'true') {
       const apod = JSON.parse(req.body.APOD)
       const existsAPOD = await Apod.findOne({ where: { url: apod.url } });
@@ -41,7 +45,8 @@ router.post('/', isAuthenticated, async (req, res) => {
     res.redirect(('/posts/' + newestPost.post_id));
   } catch (error) {
     console.error('Error creating post:', error);
-    res.status(500).send('An error occurred while creating the post.');
+    req.flash('An error occurred while creating the post.');
+    res.redirect('/')
   }
 });
 

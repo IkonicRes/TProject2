@@ -20,7 +20,7 @@
           <p id="apod-explanation" class="animatedDescription">{{APOD.explanation}}</p>
         </section>
         <div style="display: flex; flex-direction: row;">
-          <p class="hidden" id="animatedHeader">Signal Header:</p>
+          <p class="hidden" id="animatedHeader">Signal Header: </p>
           <input id="animatedInput" type="text" name="title" class="hidden" id="title">
         </div>
         <textarea id="animatedTextarea" name="text_content" class="hidden" placeholder="Enter your signal's content here."></textarea>
@@ -38,6 +38,9 @@
           <input id="apod-object" type="hidden" name="APOD" value="{{APOD}}">
             <button id="animatedButton4" type="submit" class="post-button">Submit your signal</button>
           </form>
+          {{#if message}}
+            <p class="error-message">{{ message }}</p>
+          {{/if}}
         </div>
       </section>
     </section>
@@ -56,7 +59,7 @@
         <br>
         <section id="login-submit">
             <!-- Login submit section -->
-            <button class="login-button" type="submit">Login</button>
+            <button class="logout-button" type="submit">Login</button>
         </section>
     </form>
     <p>Don't have an account? <a href="/signup">Signup</a></p>

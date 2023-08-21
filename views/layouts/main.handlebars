@@ -46,6 +46,7 @@
                     x.style.display = "none";
                 } else {
                     x.style.display = "inherit";
+                    x.style.addclass = "animated";
                 }
             }
 
@@ -78,10 +79,10 @@
                             <!-- Check if the 'user' variable exists -->
                             {{#if user}}
                             <!-- Display the logout button if the user is logged in -->
-                            <a href="/logout" class="logout-button">Logout</a>
+                            <a href="/logout" style="text-shadow:none;font-size: 1rem;" >Logout</a>
                             {{else}}
                             {{#unlessTemplate 'feed' body}}
-                            <a href="/login" class="logout-button">Login</a>
+                            <a href="/login" style="text-shadow:none;font-size: 1rem;">Login</a>
                             {{/unlessTemplate}}
                                 {{#unlessTemplate 'login' body}}
                                 {{#unlessTemplate 'signup' body}}

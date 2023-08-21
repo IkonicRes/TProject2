@@ -36,7 +36,7 @@
           <p id="apod-explanation" class="animatedDescription">{{APOD.explanation}}</p>
         </section>
         <div style="display: flex; flex-direction: row;">
-          <p class="hidden" id="animatedHeader">Signal Header:</p>
+          <p class="hidden" id="animatedHeader">Signal Header: </p>
           <input id="animatedInput" type="text" name="title" class="hidden" id="title">
         </div>
         <textarea id="animatedTextarea" name="text_content" class="hidden"></textarea>
@@ -106,6 +106,8 @@
     <!-- Display a message and links to signup and login pages -->
 </section>
 {{/if}}
+
+
 <script>
 
 $(document).ready(function() {
@@ -120,14 +122,15 @@ $(document).ready(function() {
        
           console.log(animatedButton2.classList)
         animatedButton.addEventListener('click', () => {
+          if (!animatedTextarea.classList.contains('visible')) {
             animatedTextarea.classList.toggle('visible');
             animatedInput.classList.toggle('visible');
             animatedHeader.classList.toggle('visible');
+          }
             
         });
         animatedButton.addEventListener('click', () => {
-          $('.post-button').addClass('expanded');
-
+            $('.post-button').addClass('expanded');
         })
         animatedButton2.addEventListener('click', () => {
           if (!animatedTextarea.classList.contains('visible')) {
