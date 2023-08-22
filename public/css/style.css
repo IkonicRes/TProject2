@@ -138,7 +138,7 @@ img {
     border-right: aqua 1px solid;
     border-radius: 5px;
     text-shadow: var(--base-textshadow);
-    justify-self: space-between;
+    /* justify-self: space-between; */
     margin-left: 1vw;
 }
 
@@ -157,7 +157,7 @@ img {
     /* margin-bottom: 15px; */
     border: none!important;
     align-self: flex-end;
-    justify-self: space-between;
+    /* justify-self: space-between; */
     margin-left: 1vw;
 }
 
@@ -294,7 +294,7 @@ textarea:focus {
     border-radius: 15px 15px 0 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-betwe;
+    justify-content: space-between;
     align-items: center;
     padding: 5%;
     padding-bottom: 2%;
@@ -488,7 +488,7 @@ h4 {
     color: rgb(0, 0, 0)!important;
 }
 .sections {
-    display: column;
+    /* display: column; */
     margin: .1vw;
     align-items: center;
     /* padding: 2vh 2.5vw 2vh 20vw; */
