@@ -20,7 +20,7 @@ router.get('/signup', (req, res) => {
 router.post('/signup', async (req, res) => {
 try {
     const { username, password } = req.body; // Get the username and password from the request body
-
+console.log(req.body)
     // Check if the username is already taken
     const existingUser = await User.findOne({ where: { username } });
     if (existingUser) {
@@ -41,7 +41,7 @@ try {
     // Log in the new user
     req.login(newUser, (err) => {
       if (err) throw err;
-      return res.redirect('/'); // Redirect to the homepage after successful signup
+      return res.redirect('/login'); // Redirect to the homepage after successful signup
     });
 
 } catch (error) {
@@ -58,7 +58,7 @@ router.post('/login', passport.authenticate('local', {
 }), async (req, res) => {
   // Successful authentication
   const userId = req.user.user_id; // Get the user's ID from the authenticated user object 
-  const backUrl = req.body.backURL || '/';
+  let backUrl =  '/';
 
   res.cookie('userId', userId); // Set the 'userId' cookie
 

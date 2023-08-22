@@ -22,11 +22,12 @@
         {{/if}}
         <!-- Display the post content -->
         <p>{{post.text_content}}</p>
+
         <!-- Log the current user to the console with a custom message -->
-        {{!-- {{consoleLog 'postLogout:' currentUser}} --}}
+        {{!-- {{number currentUser}} --}}
         <!-- Check if the current user owns the post or comment -->
         {{!-- {{consoleLog currentUser}} --}}
-        {{consoleLog "sep"}}
+        {{consoleLog user}}
         {{#if (ownsPostOrComment currentUser post.poster_id)}}
             <!-- Display a delete button for the post -->
             
@@ -65,8 +66,7 @@
             <!-- Form to add a new comment -->
             <form class="login-form" action="/api/comments" method="post">
                 <!-- Textarea to enter the comment content -->
-                {{!-- {{consoleLog post}} --}}
-                <input type="hidden" name="comment_poster_id" value="{{ currentUser }}">
+                <input type="hidden" name="comment_poster_id" value="{{ number currentUser }}">
                 <input type="hidden" name="post_id" value="{{ post.post_id }}">
                 <textarea id="comment" name="content" placeholder="Write your comment here"></textarea>
                 <!-- Button to submit the comment -->
@@ -84,7 +84,7 @@
                     <!-- Display the comment content -->
                     <p>{{comment.content}}</p>
                     <!-- Display the username of the user who commented -->
-                    {{consoleLog 'Current Username: ' user}}
+                    {{consoleLog user}}
                     <p>Commented by: {{comment.user.username}}</p>
                     {{!-- {{consoleLog {formatDate comment.created_at}}} --}}
                     <p>On: {{formatDateTime comment.created_at}}</p>

@@ -215,6 +215,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
   
       // const allUsers = await User.findAll(); // Fetch all users from your database
       // Populate the userMap
+      console.log('cookie script: ', req.cookies.userId)
       const currentUserId = await req.cookies.userId;
       // const userMap = allUsers.reduce((map, user) => {
       //   map[user.user_id] = { username: user.username };
@@ -231,6 +232,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       // } else {
       //   console.log('Poster not found in user map');
       // }
+      console.log("Var type:", typeof currentUserId)
       res.render('post', {
           // date: post.dataValues.created_at,
           // userMap: userMap,
