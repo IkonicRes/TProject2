@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    console.log("Body data: ", req.body)
+    console.log("Body data: ", Number(req.body.comment_poster_id))
     // Create a new comment in the database using the request body
     // console.log("🚀 ~ file: comment-routes.js:35 ~ router.post ~ req.body.currentUser:", req.body)
     const newComment = await Comment.create({

@@ -27,7 +27,7 @@
         {{!-- {{number currentUser}} --}}
         <!-- Check if the current user owns the post or comment -->
         {{!-- {{consoleLog currentUser}} --}}
-        {{consoleLog user}}
+        {{consoleLog currentUser}}
         {{#if (ownsPostOrComment currentUser post.poster_id)}}
             <!-- Display a delete button for the post -->
             
