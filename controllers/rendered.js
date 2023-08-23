@@ -217,6 +217,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
       // Populate the userMap
       console.log('cookie script: ', req.cookies.userId)
       const currentUserId = await req.cookies.userId;
+      
       // const userMap = allUsers.reduce((map, user) => {
       //   map[user.user_id] = { username: user.username };
       //     return map;
@@ -237,7 +238,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
           // date: post.dataValues.created_at,
           // userMap: userMap,
           // deletePost: deletePost,
-          currentUser: currentUserId,
+          currentUser: Number(currentUserId),
           // comments: post.comments, // Make sure post.comments is an array
           // postTitle: post.title,
           showModal: false,
